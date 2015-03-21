@@ -75,22 +75,31 @@ public class Whale implements IChatListener {
             // Split based on spaces
             String[] message_split = message.split(" ");
             // Normal subscription
-            if(message_split.length == 3 && config.enable_sub_normal) {
-                System.out.println("[Info]: Subscription "  + message_split[0] + " (1 month)");
+            if(message_split.length == 3) {
+                // Data
+                String username = message_split[0];
+                // Debug
+                System.out.println("[Info]: Subscription "  + username + " (1 month)");
                 // If enabled send message
                 if(config.enable_sub_normal) {
-                    String send_message = config.chat_message_normal.replaceAll("{username}", message_split[0]);
-                    System.out.println("[Info]: " + send_message);
+                    String send_message = config.chat_message_normal.replace("{username}", username);
+                    System.out.println("[Info]: Sending Message");
+                    bot.sendMessage("#"+config.stream_id, send_message);
                 }
             }
             // Resub subscriptions
             else if(message_split.length == 8) {
-                System.out.println("[Info]: Subscription "  + message_split[0] + " (" + message_split[3] + " months)");
+                // Data
+                String username = message_split[0];
+                String months = message_split[3];
+                // Debug
+                System.out.println("[Info]: Subscription "  + username + " (" + months + " months)");
                 // If enabled send message
                 if(config.enable_sub_resub) {
-                    String send_message = config.chat_message_normal.replaceAll("{username}", message_split[0]);
-                    send_message = message.replaceAll("{months}", message_split[3]);
-                    System.out.println("[Info]: " + send_message);
+                    String send_message = config.chat_message_resub.replace("{username}", username);
+                    send_message = send_message.replace("{months}", months);
+                    System.out.println("[Info]: Sending Message");
+                    bot.sendMessage("#"+config.stream_id, send_message);
                 }
             }
             // Welcome back messages
