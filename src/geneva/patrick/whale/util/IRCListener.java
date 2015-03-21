@@ -11,7 +11,7 @@ import java.util.Map;
 
 import org.jibble.pircbot.PircBot;
 
-public class IRCListener extends PircBot implements EventListener, IChatListener {
+public class IRCListener extends PircBot implements EventListener {
 
     // Config
     private Config config;
@@ -83,29 +83,6 @@ public class IRCListener extends PircBot implements EventListener, IChatListener
         for (IChatListener listener : listeners) {
             listener.handle_notice(sourceNick, notice);
         }
-    }
-    /**
-     * Debug output
-     */
-    public void handle_message(String channel, String sender, String message) {
-        // Create a row
-        Map<String, Object> json = new HashMap<String, Object>();
-        json.put("channel", channel);
-        json.put("user_name", sender);
-        json.put("user_color", users_color.get(sender));
-        json.put("user_emotes", users_emotes.get(sender));
-        json.put("user_message", message);
-        json.put("date_created", new Date());
-
-        // Debug output, uncomment to see console spam
-        System.out.println(json.toString());
-
-    }
-
-    @Override
-    public void handle_notice(String sender, String message) {
-        // TODO Auto-generated method stub
-
     }
 
 }
