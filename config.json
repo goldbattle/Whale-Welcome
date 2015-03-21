@@ -1,7 +1,7 @@
 {
 
   "comment_1": "The username is what username the irc bot client connects as. Usually this is your twitch username.",
-  "username": "goldbattle",
+  "username": "twitch_username",
 
 
   "comment_2": "This password is the oauth password that clients use to connect to irc servers. Make one at http://twitchapps.com/tmi/",
