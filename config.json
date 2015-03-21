@@ -1,0 +1,30 @@
+{
+
+  "comment_1": "The username is what username the irc bot client connects as. Usually this is your twitch username.",
+  "username": "goldbattle",
+
+
+  "comment_2": "This password is the oauth password that clients use to connect to irc servers. Make one at http://twitchapps.com/tmi/",
+  "password_oauth": "oauth:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+
+
+  "comment_3": "This stream id, is the channel that you want the bot to enter.",
+  "stream_id": "sevadus",
+
+
+  "comment_4": "This true/false value enables and disables if the bot should respond to normal channel subscriptions.",
+  "enable_sub_normal": true,
+
+
+  "comment_5": "This true/false value enables and disables if the bot should respond to channel re-subscriptions.",
+  "enable_sub_resub": true,
+
+
+  "comment_6": "This string defines the formating of the message that will be sent to chat on a subscription. The {username} variable can be used to insert the user's username.",
+  "chat_message_normal": "Welcome {username}!",
+
+
+  "comment_7": "This string defines the formating of the message that will be sent to chat on re-subscription. The {username} variable can be used to insert the user's username, and the {months} variable can be used to insert the months that the user has subscribed.",
+  "chat_message_resub": "Thank you {username}, for subscribing for {months} months!"
+
+}

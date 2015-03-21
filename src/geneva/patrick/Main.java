@@ -10,6 +10,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // Create the config
         Config config = new Config();
+        config.readConfig();
         // Irc bot
         IRCListener irc_bot = new IRCListener(config);
         // Create the whale

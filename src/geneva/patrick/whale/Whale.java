@@ -29,10 +29,22 @@ public class Whale implements IChatListener {
         bot.addListener(this);
         // Disable debugging output.
         bot.setVerbose(false);
+        // Display enable/disabled status
+        if(config.enable_sub_normal) {
+            System.out.println("[Info]: Normal Subscriptions: Enabled");
+        } else {
+            System.out.println("[Info]: Normal Subscriptions: Disabled");
+        }
+        // Display enable/disabled status
+        if(config.enable_sub_resub) {
+            System.out.println("[Info]: Resub Subscriptions: Enabled");
+        } else {
+            System.out.println("[Info]: Resub Subscriptions: Disabled");
+        }
         try {
             // Connect to the IRC server.
             System.out.println("[Info]: Connecting to Twitch Servers");
-            bot.connect("irc.twitch.tv", 6667, config.pass_oauth);
+            bot.connect("irc.twitch.tv", 6667, config.password_oauth);
         } catch (NickAlreadyInUseException e1) {
             System.out.println("[ERROR]: IRC Bot Nick Already In Use");
             System.exit(1);
@@ -54,7 +66,6 @@ public class Whale implements IChatListener {
         }
         // Success
         System.out.println("[Info]: Successfully Connected to " + config.stream_id);
-
     }
 
     @Override
@@ -64,12 +75,23 @@ public class Whale implements IChatListener {
             // Split based on spaces
             String[] message_split = message.split(" ");
             // Normal subscription
-            if(message_split.length == 3) {
-                System.out.println("[Info]: Subscription "  +message_split[0] + " (1 month)");
+            if(message_split.length == 3 && config.enable_sub_normal) {
+                System.out.println("[Info]: Subscription "  + message_split[0] + " (1 month)");
+                // If enabled send message
+                if(config.enable_sub_normal) {
+                    String send_message = config.chat_message_normal.replaceAll("{username}", message_split[0]);
+                    System.out.println("[Info]: " + send_message);
+                }
             }
             // Resub subscriptions
             else if(message_split.length == 8) {
                 System.out.println("[Info]: Subscription "  + message_split[0] + " (" + message_split[3] + " months)");
+                // If enabled send message
+                if(config.enable_sub_resub) {
+                    String send_message = config.chat_message_normal.replaceAll("{username}", message_split[0]);
+                    send_message = message.replaceAll("{months}", message_split[3]);
+                    System.out.println("[Info]: " + send_message);
+                }
             }
             // Welcome back messages
             else {
@@ -78,7 +100,10 @@ public class Whale implements IChatListener {
         }
     }
 
-
-
+    @Override
+    public void handle_notice(String sender, String message) {
+        System.out.println("[Error]: "+message);
+        System.exit(1);
+    }
 
 }

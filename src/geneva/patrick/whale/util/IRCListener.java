@@ -78,6 +78,12 @@ public class IRCListener extends PircBot implements EventListener, IChatListener
         }
     }
 
+    protected void onNotice(String sourceNick, String sourceLogin, String sourceHostname, String target, String notice) {
+        // Loop through each listener
+        for (IChatListener listener : listeners) {
+            listener.handle_notice(sourceNick, notice);
+        }
+    }
     /**
      * Debug output
      */
@@ -93,6 +99,12 @@ public class IRCListener extends PircBot implements EventListener, IChatListener
 
         // Debug output, uncomment to see console spam
         System.out.println(json.toString());
+
+    }
+
+    @Override
+    public void handle_notice(String sender, String message) {
+        // TODO Auto-generated method stub
 
     }
 
