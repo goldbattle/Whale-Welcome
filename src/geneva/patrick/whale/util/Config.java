@@ -24,7 +24,11 @@ public class Config {
     public static String chat_message_normal;
     // Message for resubs
     public static String chat_message_resub;
-
+    
+    /**
+     * Read in config information
+     * Store that information into the public variables
+     */
     public void readConfig() {
         // Read in data
         String data = "";

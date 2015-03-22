@@ -37,7 +37,11 @@ public class IRCListener extends PircBot implements EventListener {
         // Set our bot username
         this.setName(config.username);
     }
-
+    
+    /**
+     * Subscribes a listener to this source
+     * @param listener The listener class that wants callbacks
+     */
     public void addListener(IChatListener listener) {
         listeners.add(listener);
     }
@@ -77,7 +81,12 @@ public class IRCListener extends PircBot implements EventListener {
 
         }
     }
-
+    
+    /**
+     * Handle error notices
+     * This handles twitch replying that login was unsuccessful
+     */
+    @Override
     protected void onNotice(String sourceNick, String sourceLogin, String sourceHostname, String target, String notice) {
         // Loop through each listener
         for (IChatListener listener : listeners) {

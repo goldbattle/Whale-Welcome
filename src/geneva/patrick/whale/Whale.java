@@ -20,8 +20,8 @@ public class Whale implements IChatListener {
      * Default constructor
      * This creates the connection the twitch servers
      * Also joins the channel
-     * @param config
-     * @param irc_bot 
+     * @param config Config class
+     * @param irc_bot The irc bot that is connected to chat
      */
     public Whale(Config config, IRCListener irc_bot) {
         // Set the config
@@ -70,7 +70,12 @@ public class Whale implements IChatListener {
         // Success
         System.out.println("[Info]["+getTime()+"]: Successfully Connected to " + config.stream_id);
     }
-
+    
+    /**
+     * Call back for chat messages
+     * If the chat message if from twitch notify then handle it
+     * If it is a subscription then figure out what to do with it
+     */
     @Override
     public void handle_message(String channel, String sender, String message) {
         // Handle if we get a message from twitch
@@ -115,7 +120,11 @@ public class Whale implements IChatListener {
             }
         }
     }
-
+    
+    /**
+     * Handle notices
+     * For now, just print the error, and exit
+     */
     @Override
     public void handle_notice(String sender, String message) {
         System.out.println("[Error]["+getTime()+"]: "+message);
