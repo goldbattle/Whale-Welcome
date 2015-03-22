@@ -3,6 +3,8 @@ package geneva.patrick.whale.util;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import org.json.JSONObject;
 
@@ -31,7 +33,7 @@ public class Config {
             byte[] encoded = Files.readAllBytes(Paths.get("config.json"));
             data = new String(encoded, StandardCharsets.UTF_8);
         } catch (Exception e) {
-            System.out.println("[Error]: Unable to Locate \"config.json\"");
+            System.out.println("[Error]["+getTime()+"]: Unable to Locate \"config.json\"");
             System.exit(1);
         }
         // Set our config information
@@ -50,6 +52,14 @@ public class Config {
             System.exit(1);
         }
 
+    }
+    
+    /**
+     * Returns a nice little helper to get the current time
+     * Very nice for the logger
+     */
+    private String getTime() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
     }
 
 }

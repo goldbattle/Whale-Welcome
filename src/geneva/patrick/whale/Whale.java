@@ -1,5 +1,8 @@
 package geneva.patrick.whale;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import org.jibble.pircbot.NickAlreadyInUseException;
 
 import geneva.patrick.whale.util.Config;
@@ -31,41 +34,41 @@ public class Whale implements IChatListener {
         bot.setVerbose(false);
         // Display enable/disabled status
         if(config.enable_sub_normal) {
-            System.out.println("[Info]: Normal Subscriptions: Enabled");
+            System.out.println("[Info]["+getTime()+"]: Normal Subscriptions: Enabled");
         } else {
-            System.out.println("[Info]: Normal Subscriptions: Disabled");
+            System.out.println("[Info]["+getTime()+"]: Normal Subscriptions: Disabled");
         }
         // Display enable/disabled status
         if(config.enable_sub_resub) {
-            System.out.println("[Info]: Resub Subscriptions: Enabled");
+            System.out.println("[Info]["+getTime()+"]: Resub Subscriptions: Enabled");
         } else {
-            System.out.println("[Info]: Resub Subscriptions: Disabled");
+            System.out.println("[Info]["+getTime()+"]: Resub Subscriptions: Disabled");
         }
         try {
             // Connect to the IRC server.
-            System.out.println("[Info]: Connecting to Twitch Servers");
+            System.out.println("[Info]["+getTime()+"]: Connecting to Twitch Servers");
             bot.connect("irc.twitch.tv", 6667, config.password_oauth);
         } catch (NickAlreadyInUseException e1) {
-            System.out.println("[ERROR]: IRC Bot Nick Already In Use");
+            System.out.println("[ERROR]["+getTime()+"]: IRC Bot Nick Already In Use");
             System.exit(1);
         } catch (Exception e1) {
-            System.out.println("[ERROR]: Unable to Connect to Twitch Servers");
+            System.out.println("[ERROR]["+getTime()+"]: Unable to Connect to Twitch Servers");
             System.exit(1);
         }
         // Success
-        System.out.println("[Info]: Successfully Connected to Twitch Servers");
+        System.out.println("[Info]["+getTime()+"]: Successfully Connected to Twitch Servers");
         // Tell twitch we want api messages
         bot.sendRawLine("TWITCHCLIENT 3");
         try {
             // Join our welcome channel
-            System.out.println("[Info]: Trying to Join " + config.stream_id);
+            System.out.println("[Info]["+getTime()+"]: Trying to Join " + config.stream_id);
             bot.joinChannel("#"+Config.stream_id);
         } catch(Exception e){
-            System.out.println("[Error]: Unable to join stream");
+            System.out.println("[Error]["+getTime()+"]: Unable to join stream");
             System.exit(1);
         }
         // Success
-        System.out.println("[Info]: Successfully Connected to " + config.stream_id);
+        System.out.println("[Info]["+getTime()+"]: Successfully Connected to " + config.stream_id);
     }
 
     @Override
@@ -79,11 +82,13 @@ public class Whale implements IChatListener {
                 // Data
                 String username = message_split[0];
                 // Debug
-                System.out.println("[Info]: Subscription "  + username + " (1 month)");
+                System.out.println("[Info]["+getTime()+"]: Subscription "  + username + " (1 month)");
                 // If enabled send message
                 if(config.enable_sub_normal) {
+                    // Debug
+                    System.out.println("[Info]["+getTime()+"]: Sending Message");
+                    // Send
                     String send_message = config.chat_message_normal.replace("{username}", username);
-                    System.out.println("[Info]: Sending Message");
                     bot.sendMessage("#"+config.stream_id, send_message);
                 }
             }
@@ -93,26 +98,36 @@ public class Whale implements IChatListener {
                 String username = message_split[0];
                 String months = message_split[3];
                 // Debug
-                System.out.println("[Info]: Subscription "  + username + " (" + months + " months)");
+                System.out.println("[Info]["+getTime()+"]: Subscription "  + username + " (" + months + " months)");
                 // If enabled send message
                 if(config.enable_sub_resub) {
+                    // Debug
+                    System.out.println("[Info]["+getTime()+"]: Sending Message");
+                    // Send
                     String send_message = config.chat_message_resub.replace("{username}", username);
                     send_message = send_message.replace("{months}", months);
-                    System.out.println("[Info]: Sending Message");
                     bot.sendMessage("#"+config.stream_id, send_message);
                 }
             }
             // Welcome back messages
             else {
-                System.out.println(message);
+                System.out.println("[Info]["+getTime()+"]: " + message);
             }
         }
     }
 
     @Override
     public void handle_notice(String sender, String message) {
-        System.out.println("[Error]: "+message);
+        System.out.println("[Error]["+getTime()+"]: "+message);
         System.exit(1);
+    }
+    
+    /**
+     * Returns a nice little helper to get the current time
+     * Very nice for the logger
+     */
+    private String getTime() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
     }
 
 }
