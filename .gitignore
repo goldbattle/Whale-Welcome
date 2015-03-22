@@ -1,3 +1,7 @@
+# Allow for dev configs
+config.json
+
+# Builded files
 /bin/
 *.class
 
