@@ -17,10 +17,10 @@ Small twitch welcome bot for subscriptions
 * You should see the console output, enjoy!
 
 ### Configuration
-To configure this bot, edit the `config.json` file.
+To configure this bot, edit the `config.json` file.  
 The default config file looks something like [this](https://github.com/goldbattle/Whale-Welcome/blob/master/default-config.json).
 
-Needed information:
+### Configuration Breakdown
 * *username* - Your twitch user name the bot will login as
 * *password_oauth* - A generated oauth password. Get one from [here](http://twitchapps.com/tmi/).
 * *stream_id* - The stream you want to connect to
