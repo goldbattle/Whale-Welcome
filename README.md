@@ -31,4 +31,4 @@ The default config file looks something like [this](https://github.com/goldbattl
 
 ### Screenshot
 
-![Screenshot](/screenshot.png)
+![Screenshot](screenshot.png)
