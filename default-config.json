@@ -5,7 +5,7 @@
 
 
   "comment_2": "This password is the oauth password that clients use to connect to irc servers. Make one at http://twitchapps.com/tmi/",
-  "password_oauth": "oauth:x51ozcqdl9kzts7thh514cejeprlor",
+  "password_oauth": "oauth:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 
 
   "comment_3": "This stream id, is the channel that you want the bot to enter.",
