@@ -2,7 +2,9 @@ package geneva.patrick.whale.util;
 
 import geneva.patrick.whale.IChatListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -37,7 +39,7 @@ public class IRCListener extends PircBot implements EventListener {
         // Set our bot username
         this.setName(config.username);
     }
-    
+
     /**
      * Subscribes a listener to this source
      * @param listener The listener class that wants callbacks
@@ -81,7 +83,7 @@ public class IRCListener extends PircBot implements EventListener {
 
         }
     }
-    
+
     /**
      * Handle error notices
      * This handles twitch replying that login was unsuccessful
@@ -92,6 +94,45 @@ public class IRCListener extends PircBot implements EventListener {
         for (IChatListener listener : listeners) {
             listener.handle_notice(sourceNick, notice);
         }
+    }
+
+    /**
+     * Handles disconnect errors
+     * This handles the user's internet connection dropping,
+     * Or twitch's servers going down.
+     */
+    @Override
+    protected void onDisconnect() {
+        // Info
+        System.out.println("[Warn]["+getTime()+"]: Disconnected from Server, Reconnecting...");
+        // Time to wait between disconnects
+        int sleep_time = 5000;
+        // Check if we are connected
+        while (!isConnected()) {
+            try {
+                // Try to connect
+                this.reconnect();
+            }
+            catch (Exception e) {
+                // Print our message
+                System.out.println("[Warn]["+getTime()+"]: Trying to Re-Connect in "+sleep_time/1000+" seconds");
+                // Sleep for 5 seconds
+                try {
+                    sleep_time += 5000;
+                    Thread.sleep(sleep_time);
+                } catch (Exception e1) {}
+            }
+        }
+        // Success
+        System.out.println("[Info]["+getTime()+"]: Re-Connected Successfully");
+    }
+
+    /**
+     * Returns a nice little helper to get the current time
+     * Very nice for the logger
+     */
+    private String getTime() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
     }
 
 }
