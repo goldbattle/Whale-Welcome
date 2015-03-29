@@ -8,7 +8,7 @@ Small twitch welcome bot for subscriptions
 * Easy configuration through config file
 
 ### Installation
-* Grab the latest download from the [release](https://github.com/goldbattle/Whale-Welcome/releases) page.
+* Grab the latest download from the **[release](https://github.com/goldbattle/Whale-Welcome/releases)** page.
 * Extract the archive to a folder
 * Edit the `config.json` with all information needed.
 * For *windows* users, double click on the launch batch file
